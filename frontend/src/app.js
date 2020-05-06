@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { HashRouter, Switch, Route } from 'react-router-dom'
+// import 'bulma'
+// import './style.scss'
 
-const App = () => {
-  return <div>Hello world</div>
-}
+import Home from './components/Home'
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
+const App = () => (
+  <HashRouter>
+    <Switch>
+      <Route exact path="/" component={Home} />
+    </Switch>
+  </HashRouter>
 )
+
+ReactDOM.render(<App />, document.getElementById('root'))
