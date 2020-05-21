@@ -17,7 +17,7 @@ class ListView(APIView):
 class DetailView(APIView):
 
     def get(self, _request, pk):
-        recording = Recording.objects.get(pk=pk) # get a book by id (pk means primary key)
+        recording = Recording.objects.get(pk=pk) # get a recording by id (pk means primary key)
         serializer = RecordingSerializer(recording)
 
         return Response(serializer.data) # send the JSON to the client

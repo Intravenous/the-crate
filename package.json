@@ -1,6 +1,7 @@
 {
-  "name": "cats_app",
+  "name": "the-crate",
   "version": "1.0.0",
+  "description": "The Home of your Online Home for your Music Collection",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -11,16 +12,18 @@
   "devDependencies": {
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.10.1"
+    "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
     "@babel/preset-react": "^7.7.4",
+    "axios": "^0.19.2",
     "babel-loader": "^8.0.6",
     "bulma": "^0.8.2",
     "css-loader": "^3.4.1",
     "html-webpack-plugin": "^3.2.0",
+    "node-sass": "^4.14.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-router-dom": "^5.1.2",
