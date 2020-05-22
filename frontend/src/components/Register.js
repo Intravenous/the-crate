@@ -31,6 +31,10 @@ class Register extends React.Component {
       .post('/api/register', this.state.data)
       .then((res) => console.log('response', res))
       .then((res) => {
+        // Think below is to auto login after registration - Need to test Ptoject 3
+        // const token = res.data.token
+        // console.log(token)
+        // auth.setToken(token)
         this.props.history.push('/login')
       })
 

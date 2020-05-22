@@ -12,3 +12,21 @@ class Recording(models.Model):
 
   def __str__(self):
     return f'{self.artist}'
+
+class Artist(models.Model):
+  artist_image = models.CharField(blank=True, max_length=200)
+  artist_name = models.CharField(max_length=200)
+  artist_realname = models.CharField(blank=True, max_length=200)
+  artist_profile = models.TextField(blank=True)
+  artist_site = models.URLField(blank=True)
+  #  Need to add relationship for this
+  recording_id = models.IntegerField()
+
+class Label(models.Model):
+  label = models.CharField(max_length=50)
+
+class Genre(models.Model):
+  genre = models.CharField(max_length=50)
+
+class Style(models.Model):
+  style = models.CharField(max_length=50)

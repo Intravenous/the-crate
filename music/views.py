@@ -9,6 +9,9 @@ from rest_framework.status import HTTP_201_CREATED, HTTP_422_UNPROCESSABLE_ENTIT
 from .models import Recording
 from .serializers import RecordingSerializer # get the RecordingSerializer
 
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
 # Create your views here.
 class ListView(APIView):
 
