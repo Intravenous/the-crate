@@ -49,11 +49,9 @@ class RecordingSerializer(serializers.ModelSerializer):
 
 class TrackSerializer(serializers.ModelSerializer):
 
-    recording = RecordingSerializer
-
     class Meta:
         model = Track
-        fields = ('id', 'artist_id', 'track_number', 'track_title', 'track_duration', 'track_key', 'camelot_key', 'recording')
+        fields = ('id', 'track_number', 'track_title', 'track_duration', 'track_key', 'camelot_key')
 
 class CrateSerializer(serializers.ModelSerializer):
   
@@ -67,4 +65,19 @@ class VideoSerializer(serializers.ModelSerializer):
         model = Video
         fields = ('id', 'recording_id', 'video_title', 'video_url')
         
+
+
 # Object and field validation code goes here if required
+# Example validation code below
+
+# class BookSerializer(serializers.ModelSerializer):
+
+#     class Meta:
+#         model = Book
+#         fields = ('id', 'title', 'author', 'image')
+
+#     def validate_image(self, value):
+#         if not value.startswith('http'):
+#             raise serializers.ValidationError({'image': 'Image field must begin `http`'})
+
+#         return value

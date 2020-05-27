@@ -18,8 +18,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('django-admin/', admin.site.urls),
-    path('admin/', include('rest_framework.urls')),
+    # path('admin/', include('rest_framework.urls')),
     path('music/', include('music.urls')),
-    path('api/', include('jwt_auth.urls')), # prefix api and sending it of to our jwt_auth urls, login and register
+    path('api/', include('jwt_auth.urls')), # prefix api and sending it off to our jwt_auth urls, login and register
     path('', include('frontend.urls')),
 ]

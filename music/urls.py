@@ -5,9 +5,8 @@ from django.urls import path
 from .views import ListView, DetailView, LabelListView, LabelDetailView, CountryListView, CountryDetailView, GenreListView, GenreDetailView, StyleListView, StyleDetailView, RecordingListView, RecordingDetailView, TrackListView, TrackDetailView, CrateListView, CrateDetailView, VideoListView, VideoDetailView
 
 urlpatterns = [
-    path('', ListView.as_view()),
-    path('artist', ListView.as_view()),
-    path('<int:pk>/', DetailView.as_view()),
+    path('artist/', ListView.as_view()),
+    path('artist/<int:pk>/', DetailView.as_view()),
     path('labels/', LabelListView.as_view()),
     path('labels/<int:pk>/', LabelDetailView.as_view()),
     path('country/', CountryListView.as_view()),

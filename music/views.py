@@ -207,7 +207,7 @@ class CrateListView(APIView):
 
   def get(self, _request):
     crates = Crate.objects.all()
-    serializer = CrateSerializer(tracks, many=True)
+    serializer = CrateSerializer(crates, many=True)
 
     return Response(serializer.data)
 
@@ -228,8 +228,8 @@ class CrateDetailView(RetrieveUpdateDestroyAPIView):
 class VideoListView(APIView):
 
   def get(self, _request):
-    crates = Video.objects.all()
-    serializer = VideoSerializer(tracks, many=True)
+    videos = Video.objects.all()
+    serializer = VideoSerializer(videos, many=True)
 
     return Response(serializer.data)
 
