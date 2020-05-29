@@ -9,10 +9,14 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 from .models import Artist, Label, Country, Genre, Style, Recording, Track, Crate, Video
-from .serializers import ArtistSerializer, LabelSerializer, CountrySerializer, GenreSerializer, StyleSerializer, RecordingSerializer, TrackSerializer, CrateSerializer, VideoSerializer
+from .serializers import ArtistSerializer, LabelSerializer, CountrySerializer, GenreSerializer, StyleSerializer, RecordingSerializer, TrackSerializer, CrateSerializer, VideoSerializer, PopulateVideoSerializer, PopulateRecordingSerializer, PopulatedRecordingTrackSerializer
+
 
 # Create your views here.
-class ListView(APIView):
+class ArtistListView(APIView):
+
+  queryset = Artist.objects.all()
+  serializer_class = ArtistSerializer
 
   def get(self, _request):
     artists = Artist.objects.all() # get all the recordiings
@@ -20,7 +24,7 @@ class ListView(APIView):
 
     return Response(serializer.data) # send the JSON to the client
 
-# # Allows posting of recording using REST Framework
+# # Allows posting of recording using REST Framework -- Deserialisation --
   def post(self, _request):
     # Turn the json into data we can store in psql - reverese of get
     serializer = ArtistSerializer(data=_request.data)
@@ -32,49 +36,20 @@ class ListView(APIView):
     return Response(serializer.data, status=HTTP_422_UNPROCESSABLE_ENTITY)
 
 
-# Single recording view
-# class DetailView(APIView):
-
-#     def get(self, _request, pk):
-#         recording = Recording.objects.get(pk=pk) # get a recording by id (pk means primary key)
-#         serializer = RecordingSerializer(recording)
-
-#         return Response(serializer.data) # send the JSON to the client
-
-
-# Shorthand version of get, put and delete view (Generic Views - Good to use when you can)
-class DetailView(RetrieveUpdateDestroyAPIView):  # extend the APIView
+class ArtistDetailView(RetrieveUpdateDestroyAPIView):  # extend the APIView
 
     queryset = Artist.objects.all()
     serializer_class = ArtistSerializer
 
-# # PUT Request, can be used to override the above if required (example code)
-# def put(self, _request, pk):
-#   recording = Recording.objects.get(pk=pk)
-#   # Overwrite the existing fields with the ones that I provide in the request
-#   serializer = RecordingSerializer(recording, data=_request.data)
-#   if serializer.is_valid():
-#     serializer.save()
-#     return Response(serializer.data, status=HTTP_202_ACCEPTED)
-
-#   return Response(status=HTTP_422_UNPROCESSABLE_ENTITY)
-
-#   def delete(self, request, pk):
-#     recording = Recording.objects.get(pk=pk)
-#     #  Delete Recording
-#     recording.delete()
-
-#     return Response(status=HTTP_204_NO_CONTENT)
 
 class LabelListView(APIView):
 
   def get(self, _request):
-    labels = Label.objects.all() # get all the recordiings
+    labels = Label.objects.all()
     serializer = LabelSerializer(labels, many=True)
 
-    return Response(serializer.data) # send the JSON to the client
+    return Response(serializer.data)
 
-# # Allows posting of recording using REST Framework
   def post(self, _request):
     serializer = LabelSerializer(data=_request.data)
     if serializer.is_valid():
@@ -83,7 +58,7 @@ class LabelListView(APIView):
     
     return Response(serializer.data, status=HTTP_422_UNPROCESSABLE_ENTITY)
 
-class LabelDetailView(RetrieveUpdateDestroyAPIView):  # extend the APIView
+class LabelDetailView(RetrieveUpdateDestroyAPIView):
 
     queryset = Label.objects.all()
     serializer_class = LabelSerializer
@@ -93,12 +68,11 @@ class LabelDetailView(RetrieveUpdateDestroyAPIView):  # extend the APIView
 class GenreListView(APIView):
 
   def get(self, _request):
-    genres = Genre.objects.all() # get all the recordiings
+    genres = Genre.objects.all()
     serializer = GenreSerializer(genres, many=True)
 
-    return Response(serializer.data) # send the JSON to the client
+    return Response(serializer.data)
 
-# # Allows posting of recording using REST Framework
   def post(self, _request):
     serializer = GenreSerializer(data=_request.data)
     if serializer.is_valid():
@@ -107,7 +81,7 @@ class GenreListView(APIView):
     
     return Response(serializer.data, status=HTTP_422_UNPROCESSABLE_ENTITY)
 
-class GenreDetailView(RetrieveUpdateDestroyAPIView):  # extend the APIView
+class GenreDetailView(RetrieveUpdateDestroyAPIView):
 
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
@@ -117,12 +91,11 @@ class GenreDetailView(RetrieveUpdateDestroyAPIView):  # extend the APIView
 class CountryListView(APIView):
 
   def get(self, _request):
-    countrys = Country.objects.all() # get all the recordiings
+    countrys = Country.objects.all()
     serializer = CountrySerializer(countrys, many=True)
 
-    return Response(serializer.data) # send the JSON to the client
+    return Response(serializer.data)
 
-# # Allows posting of recording using REST Framework
   def post(self, _request):
     serializer = CountrySerializer(data=_request.data)
     if serializer.is_valid():
@@ -131,7 +104,7 @@ class CountryListView(APIView):
     
     return Response(serializer.data, status=HTTP_422_UNPROCESSABLE_ENTITY)
 
-class CountryDetailView(RetrieveUpdateDestroyAPIView):  # extend the APIView
+class CountryDetailView(RetrieveUpdateDestroyAPIView):
 
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
@@ -140,10 +113,10 @@ class CountryDetailView(RetrieveUpdateDestroyAPIView):  # extend the APIView
 class StyleListView(APIView):
 
   def get(self, _request):
-    styles = Style.objects.all() # get all the recordiings
+    styles = Style.objects.all()
     serializer = StyleSerializer(styles, many=True)
 
-    return Response(serializer.data) # send the JSON to the client
+    return Response(serializer.data)
 
   def post(self, _request):
     serializer = StyleSerializer(data=_request.data)
@@ -153,7 +126,7 @@ class StyleListView(APIView):
     
     return Response(serializer.data, status=HTTP_422_UNPROCESSABLE_ENTITY)
 
-class StyleDetailView(RetrieveUpdateDestroyAPIView):  # extend the APIView
+class StyleDetailView(RetrieveUpdateDestroyAPIView):
 
     queryset = Style.objects.all()
     serializer_class = StyleSerializer
@@ -163,7 +136,7 @@ class RecordingListView(APIView):
 
   def get(self, _request):
     recordings = Recording.objects.all()
-    serializer = RecordingSerializer(recordings, many=True)
+    serializer = PopulatedRecordingTrackSerializer(recordings, many=True)
 
     return Response(serializer.data)
 
@@ -176,12 +149,14 @@ class RecordingListView(APIView):
     return Response(serializer.data, status=HTTP_422_UNPROCESSABLE_ENTITY)
 
 class RecordingDetailView(RetrieveUpdateDestroyAPIView):
-
     queryset = Recording.objects.all()
-    serializer_class = RecordingSerializer
+    serializer_class = PopulatedRecordingTrackSerializer
 
 # Track
 class TrackListView(APIView):
+  # works without the below, but this gives you the nice HTML REST form - Like using ListCreateAPIView, but with APIView
+  queryset = Track.objects.all()
+  serializer_class = TrackSerializer
 
   def get(self, _request):
     tracks = Track.objects.all()
@@ -204,6 +179,9 @@ class TrackDetailView(RetrieveUpdateDestroyAPIView):
 
 # Crate
 class CrateListView(APIView):
+  # works without the below, but this gives you the nice HTML REST form - Like using ListCreateAPIView, but with APIView
+  queryset = Crate.objects.all()
+  serializer_class = CrateSerializer
 
   def get(self, _request):
     crates = Crate.objects.all()
@@ -226,10 +204,15 @@ class CrateDetailView(RetrieveUpdateDestroyAPIView):
 
 # Video
 class VideoListView(APIView):
+  # works without the below, but this gives you the nice HTML REST form - Like using ListCreateAPIView, but with APIView
+  queryset = Video.objects.all()
+  serializer_class = VideoSerializer
 
   def get(self, _request):
     videos = Video.objects.all()
     serializer = VideoSerializer(videos, many=True)
+    # Nests the full Recording object rather than just the recording_name in the video object
+    # serializer = PopulateVideoSerializer(videos, many=True)
 
     return Response(serializer.data)
 
@@ -245,3 +228,36 @@ class VideoDetailView(RetrieveUpdateDestroyAPIView):
 
     queryset = Video.objects.all()
     serializer_class = VideoSerializer
+
+
+# Example code
+# Single recording view
+# class DetailView(APIView):
+
+#     def get(self, _request, pk):
+#         recording = Recording.objects.get(pk=pk) # get a recording by id (pk means primary key)
+#         serializer = RecordingSerializer(recording)
+
+#         return Response(serializer.data) # send the JSON to the client
+
+
+# Shorthand version of get, put and delete view (Generic Views - Good to use when you can)
+
+
+# # PUT Request, can be used to override 'RetrieveUpdateDestroyAPIView' if required (example code)
+# def put(self, _request, pk):
+#   recording = Recording.objects.get(pk=pk)
+#   # Overwrite the existing fields with the ones that I provide in the request
+#   serializer = RecordingSerializer(recording, data=_request.data)
+#   if serializer.is_valid():
+#     serializer.save()
+#     return Response(serializer.data, status=HTTP_202_ACCEPTED)
+
+#   return Response(status=HTTP_422_UNPROCESSABLE_ENTITY)
+
+#   def delete(self, request, pk):
+#     recording = Recording.objects.get(pk=pk)
+#     #  Delete Recording
+#     recording.delete()
+
+#     return Response(status=HTTP_204_NO_CONTENT)

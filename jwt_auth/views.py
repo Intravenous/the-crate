@@ -12,6 +12,7 @@ from django.conf import settings
 import jwt
 from .serializers import UserSerializer
 
+# Deserialisation
 class RegisterView(APIView):
 
     def post(self, request):

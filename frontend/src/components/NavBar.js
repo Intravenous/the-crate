@@ -5,7 +5,9 @@ import auth from '../lib/auth'
 class NavBar extends React.Component {
   constructor() {
     super()
-    this.state = {}
+    this.state = {
+      // navMobileOpen: false
+    }
   }
 
   handleLogout() {
@@ -13,7 +15,16 @@ class NavBar extends React.Component {
     this.props.history.push('/')
   }
 
+  // What does the below and navMobileOpen: false in state do?  In LABS, but not BookedUp
+
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.location.pathname !== prevProps.location.pathname) {
+  //     this.setState({ navMobileOpen: false })
+  //   }
+  // }
+
   render() {
+    const isLoggedIn = auth.isLoggedIn()
     return (
       <nav className="navbar" role="navigation" aria-label="main navigation">
         <div className="container navbar-container">
@@ -43,26 +54,27 @@ class NavBar extends React.Component {
             }`}>
 
             <div className="navbar-end">
+              {isLoggedIn && <div className="navbar-item">
+                <Link to="/crate">Crate</Link>
+              </div>}
               <div className="navbar-item">
-                <Link to='/search'>Search</Link>
+                <Link to="/search">Search</Link>
               </div>
-              <div className="navbar-item">
-                <Link to='/register'>Register</Link>
-              </div>
-              <div className="navbar-item">
-                <Link to='/login'>Login</Link>
-              </div>
-              
-              <div className="navbar-item">
-                <Link to='/profile/:user_id'>Profile</Link>
-              </div>
-              <div
+              {!isLoggedIn && <div className="navbar-item">
+                <Link to="/register">Register</Link>
+              </div>}
+              {!isLoggedIn && <div className="navbar-item">
+                <Link to="/login">Login</Link>
+              </div>}
+              {isLoggedIn && <div className="navbar-item">
+                <Link to="/profile/:user_id">Profile</Link>
+              </div>}
+              {isLoggedIn && <div
                 onClick={() => this.handleLogout()}
                 className="navbar-item">
-                {/* Add in this code once login and logout is working */}
-                {/* {isLoggedIn && <Link className="navbar-edited">Log out</Link>} */}
-                <Link className="navbar-edited">Log out</Link>
-              </div>
+                <Link to="/">Log out</Link>
+              </div>}
+
             </div>
           </div>
         </div>

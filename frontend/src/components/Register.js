@@ -35,7 +35,7 @@ class Register extends React.Component {
         // const token = res.data.token
         // console.log(token)
         // auth.setToken(token)
-        this.props.history.push('/login')
+        this.props.history.push('/login') // If I can auto login, what page should i push to - Search?
       })
 
       .catch((error) => {

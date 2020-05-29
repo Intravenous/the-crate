@@ -72,7 +72,7 @@ class Recording(models.Model):
 class Track(models.Model):
     recording_id = models.ForeignKey(
       Recording, related_name='track', on_delete=models.CASCADE)
-    track_number = models.CharField(max_length=5)
+    track_id = models.CharField(max_length=5)
     track_title = models.CharField(max_length=200)
     track_duration = models.CharField(max_length=10)
     track_key = models.CharField(blank=True, max_length=50)
