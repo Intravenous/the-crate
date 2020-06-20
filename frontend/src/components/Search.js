@@ -40,7 +40,7 @@ class SearchRelease extends React.Component {
           <div className="container">
             <SearchBar value={value} handleSubmit={(event) => this.handleSubmit(event)} handleChange={(event) => this.handleChange(event)} />
             <div>
-              Hello
+              {/* Hello */}
               {/* <h1>{this.state.release.artist.name}</h1> */}
             </div>
           </div>

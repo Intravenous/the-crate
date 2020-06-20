@@ -5,12 +5,17 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied
-# from django.contrib.auth.models import User
+from rest_framework.permissions import IsAuthenticated
+
 from django.contrib.auth import get_user_model
 User = get_user_model()
+
 from django.conf import settings
 import jwt
+
 from .serializers import UserSerializer
+
+
 
 # Deserialisation
 class RegisterView(APIView):
@@ -43,3 +48,15 @@ class LoginView(APIView):
 
         token = jwt.encode({'sub': user.id}, settings.SECRET_KEY, algorithm='HS256')
         return Response({'token': token, 'message': f'Welcome back {user.username}!'})
+
+
+# Profile view - Not fully implemented ---------------
+class ProfileView(APIView):
+
+# Authentication needs to be implemented
+    permission_classes = (IsAuthenticated, )
+
+    def get(self, request):
+        user = User.objects.get(pk=request.user.id)
+        serialized_user = UserSerializer(user)
+        return Response(serialized_user.data)

@@ -2,15 +2,15 @@ from rest_framework.views import APIView # get the APIView class from DRF
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 from rest_framework.response import Response # get the Response class from DRF
-
 from rest_framework.status import HTTP_201_CREATED, HTTP_422_UNPROCESSABLE_ENTITY, HTTP_202_ACCEPTED, HTTP_204_NO_CONTENT
+
+# from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
 from .models import Artist, Label, Country, Genre, Style, Recording, Track, Crate, Video
-from .serializers import ArtistSerializer, LabelSerializer, CountrySerializer, GenreSerializer, StyleSerializer, RecordingSerializer, TrackSerializer, CrateSerializer, VideoSerializer, PopulateVideoSerializer, PopulateRecordingSerializer, PopulatedRecordingTrackSerializer
-
+from .serializers import ArtistSerializer, LabelSerializer, CountrySerializer, GenreSerializer, StyleSerializer, RecordingSerializer, TrackSerializer, CrateSerializer, VideoSerializer, PopulateRecordingSerializer, PopulatedRecordingTrackSerializer
 
 # Create your views here.
 class ArtistListView(APIView):
@@ -183,6 +183,9 @@ class CrateListView(APIView):
   queryset = Crate.objects.all()
   serializer_class = CrateSerializer
 
+  # Permissions
+  # permission_classes = (IsAuthenticated, )
+
   def get(self, _request):
     crates = Crate.objects.all()
     serializer = CrateSerializer(crates, many=True)
@@ -211,8 +214,6 @@ class VideoListView(APIView):
   def get(self, _request):
     videos = Video.objects.all()
     serializer = VideoSerializer(videos, many=True)
-    # Nests the full Recording object rather than just the recording_name in the video object
-    # serializer = PopulateVideoSerializer(videos, many=True)
 
     return Response(serializer.data)
 

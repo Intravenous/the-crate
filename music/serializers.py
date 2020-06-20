@@ -13,6 +13,8 @@ class ArtistSerializer(serializers.ModelSerializer):
     model = Artist
     fields = ('id', 'artist_name', 'artist_realname',
                   'artist_image', 'artist_profile', 'artist_site')
+    # If you want to take all fields, but don't want to type them all as above, below is shorthand
+    # fields = '__all__'
 
 
 class LabelSerializer(serializers.ModelSerializer):
@@ -81,8 +83,9 @@ class PopulatedRecordingTrackSerializer(PopulateRecordingSerializer):
   track = TrackSerializer(many=True)
 
 
-
 class CrateSerializer(serializers.ModelSerializer):
+
+  recording_id = RecordingSerializer(many=True)
 
   class Meta:
     model = Crate
@@ -94,17 +97,6 @@ class VideoSerializer(serializers.ModelSerializer):
     model = Video
     fields = ('id', 'recording_id', 'video_title', 'video_url')
         
-
-# Testing------------------------------------- Working for whole object
-class PopulateVideoSerializer(serializers.ModelSerializer):
-
-  recording_id = RecordingSerializer()
-    
-  class Meta:
-    model = Video
-    fields = ('id', 'recording_id', 'video_title', 'video_url')
-
-# ------------------------------------------------
 
 # Object and field validation code goes here if required
 # Example validation code below

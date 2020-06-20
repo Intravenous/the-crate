@@ -86,8 +86,7 @@ class Crate(models.Model):
     date_added = models.DateField(auto_now_add=True)
     user_id = models.ForeignKey(
         User, related_name='crate', on_delete=models.CASCADE)
-    recording_id = models.ForeignKey(
-        Recording, related_name='crate', on_delete=models.CASCADE)
+    recording_id = models.ManyToManyField(Recording, related_name='crate')
     crate_name = models.CharField(blank=True, max_length=100)
 
     def __str__(self):

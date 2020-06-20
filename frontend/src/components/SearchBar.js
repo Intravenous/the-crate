@@ -11,7 +11,8 @@ const SearchBar = ({ handleChange, handleSubmit }) => {
           <input
             className="input is-medium"
             type="search"
-            placeholder="Search by artist, track or album"
+            placeholder="Search by track number"
+            // placeholder="Search by artist, track or album"
             // value={query}
             onChange={handleChange}
           />

@@ -10,8 +10,8 @@ import Search from './components/Search'
 import NavBar from './components/NavBar'
 import Login from './components/Login'
 import Register from './components/Register'
-// import Crate from './components/Crate'
-// import Profile from './components/Profile'
+import Crate from './components/Crate'
+import Profile from './components/Profile'
 
 const App = () => (
   <HashRouter>
@@ -21,8 +21,8 @@ const App = () => (
       <Route exact path="/login" component={Login} />
       <Route exact path="/register" component={Register} />
       <Route exact path="/search" component={Search} />
-      {/* <Route exact path="/crate" component={Crate} /> */}
-      {/* <Route path="/profile/:user_id" component={Profile} /> */}
+      <Route exact path="/crate" component={Crate} />
+      <Route path="/profile/:user_id" component={Profile} />
     </Switch>
   </HashRouter>
 )
